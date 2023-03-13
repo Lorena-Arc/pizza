@@ -22,13 +22,13 @@ public class OrdersGUIController {
     @FXML
     private ComboBox<Integer> orderQuantity;
     @FXML
-    private TableView orderTable;
+    private TableView<MenuDataModel> orderTable;
     @FXML
-    private TableColumn tableQuantity;
+    private TableColumn<MenuDataModel, Integer> tableQuantity;
     @FXML
-    protected TableColumn tableMenuItem;
+    protected TableColumn<MenuDataModel, String> tableMenuItem;
     @FXML
-    private TableColumn tablePrice;
+    private TableColumn<MenuDataModel, Double> tablePrice;
     @FXML
     private Label pizzaTypeLabel;
     @FXML
@@ -46,25 +46,25 @@ public class OrdersGUIController {
 
     private   List<String> orderList = FXCollections.observableArrayList();
     private List<Double> orderPaymentList = FXCollections.observableArrayList();
-    public static double getTotalAmount() {
+    public static Double getTotalAmount() {
         return totalAmount;
     }
-    public void setTotalAmount(double totalAmount) {
+    public void setTotalAmount(Double totalAmount) {
         this.totalAmount = totalAmount;
     }
 
     private PizzaService service;
-    private int tableNumber;
+    private Integer tableNumber;
 
     public ObservableList<String> observableList;
     private TableView<MenuDataModel> table = new TableView<MenuDataModel>();
     private ObservableList<MenuDataModel> menuData;// = FXCollections.observableArrayList();
     private Calendar now = Calendar.getInstance();
-    private static double totalAmount;
+    private static Double totalAmount;
 
     public OrdersGUIController(){ }
 
-    public void setService(PizzaService service, int tableNumber){
+    public void setService(PizzaService service,Integer tableNumber){
         this.service=service;
         this.tableNumber=tableNumber;
         initData();

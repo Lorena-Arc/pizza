@@ -12,23 +12,18 @@ public class MenuRepository {
     private List<MenuDataModel> listMenu;
 
     public MenuRepository(){
+        // default constructor
     }
 
     private void readMenu(){
-        //ClassLoader classLoader = MenuRepository.class.getClassLoader();
         File file = new File(filename);
-        this.listMenu= new ArrayList();
-        BufferedReader br = null;
-        try {
-            br = new BufferedReader(new FileReader(file));
+        this.listMenu= new ArrayList<>();
+        try (BufferedReader br = new BufferedReader(new FileReader(file))) {
             String line = null;
             while((line=br.readLine())!=null){
                 MenuDataModel menuItem=getMenuItem(line);
                 listMenu.add(menuItem);
             }
-            br.close();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -39,7 +34,7 @@ public class MenuRepository {
         if (line==null|| line.equals("")) return null;
         StringTokenizer st=new StringTokenizer(line, ",");
         String name= st.nextToken();
-        double price = Double.parseDouble(st.nextToken());
+        Double price = Double.parseDouble(st.nextToken());
         item = new MenuDataModel(name, 0, price);
         return item;
     }

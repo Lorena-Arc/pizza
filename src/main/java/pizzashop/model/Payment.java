@@ -3,16 +3,16 @@ package pizzashop.model;
 
 public class Payment {
 
-    private int tableNumber;
+    private Integer tableNumber;
     private PaymentType type;
-    private double amount;
-    public Payment(int tableNumber, PaymentType type, double amount) {
+    private Double amount;
+    public Payment(int tableNumber, PaymentType type, Double amount) {
         this.tableNumber = tableNumber;
         this.type = type;
         this.amount = amount;
     }
 
-    public int getTableNumber() {
+    public Integer getTableNumber() {
         return tableNumber;
     }
 
@@ -28,11 +28,11 @@ public class Payment {
         this.type = type;
     }
 
-    public double getAmount() {
+    public Double getAmount() {
         return amount;
     }
 
-    public void setAmount(double amount) {
+    public void setAmount(Double amount) {
         this.amount = amount;
     }
 

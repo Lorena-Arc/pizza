@@ -12,12 +12,11 @@ import pizzashop.service.PizzaService;
 import java.io.IOException;
 
 public class OrdersGUI {
-    protected int tableNumber;
-    public int getTableNumber() {
+    protected Integer tableNumber;
+    public Integer getTableNumber() {
         return tableNumber;
     }
     public void setTableNumber(int tableNumber) { this.tableNumber = tableNumber; }
-    private PizzaService service;
 
     public void displayOrdersForm(PizzaService service){
      VBox vBoxOrders = null;

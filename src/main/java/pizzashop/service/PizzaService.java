@@ -22,13 +22,13 @@ public class PizzaService {
 
     public List<Payment> getPayments(){return payRepo.getAll(); }
 
-    public void addPayment(int table, PaymentType type, double amount){
+    public void addPayment(int table, PaymentType type, Double amount){
         Payment payment= new Payment(table, type, amount);
         payRepo.add(payment);
     }
 
-    public double getTotalAmount(PaymentType type){
-        double total=0.0f;
+    public Double getTotalAmount(PaymentType type){
+        Double total=0.0d;
         List<Payment> l=getPayments();
         if ((l==null) ||(l.size()==0)) return total;
         for (Payment p:l){

@@ -12,12 +12,12 @@ public class MenuRepository {
     private List<MenuDataModel> listMenu;
 
     public MenuRepository(){
+        // default constructor
     }
 
     private void readMenu(){
-        //ClassLoader classLoader = MenuRepository.class.getClassLoader();
         File file = new File(filename);
-        this.listMenu= new ArrayList();
+        this.listMenu= new ArrayList<>();
         try (BufferedReader br = new BufferedReader(new FileReader(file))) {
             String line = null;
             while((line=br.readLine())!=null){

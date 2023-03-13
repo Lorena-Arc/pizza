@@ -18,7 +18,6 @@ public class PaymentRepository {
     }
 
     private void readPayments(){
-        //ClassLoader classLoader = PaymentRepository.class.getClassLoader();
         File file = new File(filename);
         try(BufferedReader br = new BufferedReader(new FileReader(file))) {
             String line = null;
@@ -52,7 +51,6 @@ public class PaymentRepository {
     }
 
     public void writeNewPayment(Payment payment){
-        //ClassLoader classLoader = PaymentRepository.class.getClassLoader();
         File file = new File(filename);
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(file, true))) {
                 System.out.println(payment.toString());

@@ -46,7 +46,7 @@ class PizzaServiceTest {
         pizzaService.addPayment(payment.getTableNumber(), payment.getType(), payment.getAmount());
         assertEquals(19.3, payment.getAmount(), "Amount should be 19.3");
         assertTrue(payment.getTableNumber() <= 8);
-        assertEquals(1, payment.getTableNumber(), "Table number should be 7");
+        assertEquals(1, payment.getTableNumber(), "Table number should be 1");
 
     }
     @ParameterizedTest

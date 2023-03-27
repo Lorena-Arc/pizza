@@ -15,6 +15,7 @@ import pizzashop.repository.PaymentRepository;
 import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(MockitoExtension.class)
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class PizzaServiceTest {
 
     @Mock
@@ -35,16 +36,8 @@ class PizzaServiceTest {
     void tearDown() {
     }
 
-    @ParameterizedTest
-    @ValueSource(ints = {1,2,3,4,5,6,7,8})
-    @DisplayName("Test for table numbers")
-    void tableNumberRange(int i){
-        Payment payment = new Payment(i, PaymentType.Cash, 19.3);
-        pizzaService.addPayment(payment.getTableNumber(), payment.getType(), payment.getAmount());
-        assertTrue(i >= 1 && i <= 8);
-    }
-
     @Test
+    @Order(1)
     @DisplayName("Test for checking a payment")
     @Tag("payment")
     void addPaymentSuccessfully() {
@@ -56,8 +49,19 @@ class PizzaServiceTest {
         assertEquals(1, payment.getTableNumber(), "Table number should be 7");
 
     }
+    @ParameterizedTest
+    @Order(2)
+    @ValueSource(ints = {1,2,3,4,5,6,7,8})
+    @DisplayName("Test for table numbers")
+    void tableNumberRange(int i){
+        Payment payment = new Payment(i, PaymentType.Cash, 19.3);
+        pizzaService.addPayment(payment.getTableNumber(), payment.getType(), payment.getAmount());
+        assertTrue(i >= 1 && i <= 8);
+    }
+
 
     @Test
+    @Order(4)
     @DisplayName("Test for invalid table number")
     void addPaymentWithInvalidTableNo(){
         //table number = 9
@@ -74,6 +78,8 @@ class PizzaServiceTest {
     }
 
     @Test
+    @Order(3)
+    @Timeout(1)
     @DisplayName("Test for invalid amount")
     void addPaymentWithInvalidAmount(){
         //amount = 0

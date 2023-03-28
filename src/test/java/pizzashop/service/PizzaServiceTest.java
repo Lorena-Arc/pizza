@@ -12,7 +12,10 @@ import pizzashop.model.PaymentType;
 import pizzashop.repository.MenuRepository;
 import pizzashop.repository.PaymentRepository;
 
+import static org.mockito.ArgumentMatchers.any;
+
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
@@ -38,58 +41,135 @@ class PizzaServiceTest {
 
     @Test
     @Order(1)
-    @DisplayName("Test for checking a payment")
+    @DisplayName("Test for checking a payment - ECP")
     @Tag("payment")
     void addPaymentSuccessfully() {
-        Payment payment = new Payment(1, PaymentType.Cash, 19.3);
+        // given
+        Payment payment = new Payment(2, PaymentType.Cash, 19.3);
         System.out.println(payment.getTableNumber());
+
+        // when
         pizzaService.addPayment(payment.getTableNumber(), payment.getType(), payment.getAmount());
+
+        // then
+        verify(paymentRepository).add(any());
+        verifyNoMoreInteractions(paymentRepository);
         assertEquals(19.3, payment.getAmount(), "Amount should be 19.3");
         assertTrue(payment.getTableNumber() <= 8);
-        assertEquals(1, payment.getTableNumber(), "Table number should be 1");
-
-    }
-    @ParameterizedTest
-    @Order(2)
-    @ValueSource(ints = {1,2,3,4,5,6,7,8})
-    @DisplayName("Test for table numbers")
-    void tableNumberRange(int i){
-        Payment payment = new Payment(i, PaymentType.Cash, 19.3);
-        pizzaService.addPayment(payment.getTableNumber(), payment.getType(), payment.getAmount());
-        assertTrue(i >= 1 && i <= 8);
+        assertEquals(2, payment.getTableNumber(), "Table number should be 2");
     }
 
 
     @Test
-    @Order(4)
-    @DisplayName("Test for invalid table number")
-    void addPaymentWithInvalidTableNo(){
-        //table number = 9
-        Payment payment = new Payment(9, PaymentType.Cash, 19.3);
+    @Order(2)
+    @DisplayName("Test for invalid table number - ECP")
+    void addPaymentWithInvalidTableNoECP(){
+        // given
+        Payment payment = new Payment(11, PaymentType.Cash, 230d);
         System.out.println(payment.getTableNumber());
-        pizzaService.addPayment(payment.getTableNumber(), payment.getType(), payment.getAmount());
-        assertFalse(payment.getTableNumber()>0 && payment.getTableNumber()<9);
 
-        //table number = 0
-        Payment payment1 = new Payment(0, PaymentType.Cash, 19.3);
-        System.out.println(payment1.getTableNumber());
-        pizzaService.addPayment(payment1.getTableNumber(), payment1.getType(), payment1.getAmount());
-        assertFalse(payment1.getTableNumber()>0 && payment1.getTableNumber()<9);
+        // when
+        pizzaService.addPayment(payment.getTableNumber(), payment.getType(), payment.getAmount());
+
+        // then
+        verifyNoInteractions(paymentRepository);
+        assertFalse(payment.getTableNumber()>0 && payment.getTableNumber()<9);
     }
 
     @Test
     @Order(3)
-    @Timeout(1)
-    @DisplayName("Test for invalid amount")
-    void addPaymentWithInvalidAmount(){
-        //amount = 0
-        Payment payment = new Payment(7, PaymentType.Cash, 0.0);
-        pizzaService.addPayment(payment.getTableNumber(), payment.getType(), payment.getAmount());
-        assertFalse(payment.getAmount() > 0);
+    @DisplayName("Test for invalid table number - ECP")
+    void addPaymentWithInvalidAmountECP(){
+        // given
+        Payment payment = new Payment(5, PaymentType.Cash, -45d);
+        System.out.println(payment.getTableNumber());
 
-        //amount < 0
-        Payment payment1 = new Payment(7, PaymentType.Cash, -0.1);
+        // when
+        pizzaService.addPayment(payment.getTableNumber(), payment.getType(), payment.getAmount());
+
+        // then
+        verifyNoInteractions(paymentRepository);
+        assertFalse(payment.getAmount()>0);
+    }
+
+
+    @ParameterizedTest
+    @Order(4)
+    @ValueSource(ints = {1, 8})
+    @DisplayName("Test for valid table number - BVA")
+    void tableNumberRange(int i){
+        // given
+        Payment payment = new Payment(i, PaymentType.Cash, 19.3);
+
+        // when
+        pizzaService.addPayment(payment.getTableNumber(), payment.getType(), payment.getAmount());
+
+        // then
+        verify(paymentRepository).add(any());
+        verifyNoMoreInteractions(paymentRepository);
+        assertTrue(i >= 1 && i <= 8);
+    }
+    @Test
+    @Order(5)
+    @DisplayName("Test for 0 table number - BVA")
+    void addPaymentWith0TableNo(){
+        // given
+        Payment payment1 = new Payment(0, PaymentType.Cash, 19.3);
+        System.out.println(payment1.getTableNumber());
+
+        // when
         pizzaService.addPayment(payment1.getTableNumber(), payment1.getType(), payment1.getAmount());
+
+        // then
+        verifyNoInteractions(paymentRepository);
+        assertFalse(payment1.getTableNumber()>0 && payment1.getTableNumber()<9);
+    }
+
+    @Test
+    @Order(6)
+    @DisplayName("Test for 9 table number - BVA")
+    void addPaymentWith9TableNo(){
+        // given
+        Payment payment = new Payment(9, PaymentType.Cash, 19.3);
+        System.out.println(payment.getTableNumber());
+
+        // when
+        pizzaService.addPayment(payment.getTableNumber(), payment.getType(), payment.getAmount());
+
+        // then
+        verifyNoInteractions(paymentRepository);
+        assertFalse(payment.getTableNumber()>0 && payment.getTableNumber()<9);
+    }
+
+    @Test
+    @Order(7)
+    @Timeout(1)
+    @DisplayName("Test for zero amount - BVA")
+    void addPaymentWithZeroAmount(){
+        // given
+        Payment payment = new Payment(7, PaymentType.Cash, 0.0);
+
+        // when
+        pizzaService.addPayment(payment.getTableNumber(), payment.getType(), payment.getAmount());
+
+        // then
+        verifyNoInteractions(paymentRepository);
+        assertFalse(payment.getAmount() > 0);
+    }
+
+    @Test
+    @Order(8)
+    @Timeout(1)
+    @DisplayName("Test for negative amount - BVA")
+    void addPaymentWithInvalidAmount(){
+        // given
+        Payment payment1 = new Payment(7, PaymentType.Cash, -0.1);
+
+        // when
+        pizzaService.addPayment(payment1.getTableNumber(), payment1.getType(), payment1.getAmount());
+
+        // then
+        verifyNoInteractions(paymentRepository);
         assertFalse(payment1.getAmount() > 0);
     }
 }

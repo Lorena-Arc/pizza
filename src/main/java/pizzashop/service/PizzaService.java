@@ -27,10 +27,10 @@ public class PizzaService {
         if(table >=1 && table <= 8 && amount > 0){
             payRepo.add(payment);
         }
-        else if(table < 0 || table > 8){
+        else if(table < 0 || table > 8) {
             System.out.println("Table number should be between 1 and 8");
         }
-        else if(amount <= 0){
+        else if(amount <= 0) {
             System.out.println("Amount should be a strict positive number");
         }
     }

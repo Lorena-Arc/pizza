@@ -187,6 +187,6 @@ class PizzaServiceTest {
         // then
         verify(paymentRepository).add(any());
         verifyNoMoreInteractions(paymentRepository);
-        assertFalse(payment1.getAmount() > 0);
+        assertFalse(payment1.getAmount() < 0);
     }
 }

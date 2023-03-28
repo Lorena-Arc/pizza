@@ -78,10 +78,10 @@ class PizzaServiceTest {
 
     @Test
     @Order(3)
-    @DisplayName("Test for invalid table number - ECP")
+    @DisplayName("Test for invalid amount number - ECP")
     void addPaymentWithInvalidAmountECP(){
         // given
-        Payment payment = new Payment(5, PaymentType.Cash, -45d);
+        Payment payment = new Payment(5, PaymentType.Cash, -60d);
         System.out.println(payment.getTableNumber());
 
         // when
@@ -99,7 +99,7 @@ class PizzaServiceTest {
     @DisplayName("Test for valid table number - BVA")
     void tableNumberRange(int i){
         // given
-        Payment payment = new Payment(i, PaymentType.Cash, 19.3);
+        Payment payment = new Payment(i, PaymentType.Card, 0.01);
 
         // when
         pizzaService.addPayment(payment.getTableNumber(), payment.getType(), payment.getAmount());
@@ -130,7 +130,7 @@ class PizzaServiceTest {
     @DisplayName("Test for 9 table number - BVA")
     void addPaymentWith9TableNo(){
         // given
-        Payment payment = new Payment(9, PaymentType.Cash, 19.3);
+        Payment payment = new Payment(9, PaymentType.Card, 0.01);
         System.out.println(payment.getTableNumber());
 
         // when
@@ -170,6 +170,23 @@ class PizzaServiceTest {
 
         // then
         verifyNoInteractions(paymentRepository);
+        assertFalse(payment1.getAmount() > 0);
+    }
+
+    @Test
+    @Order(9)
+    @Timeout(1)
+    @DisplayName("Test for positive amount - BVA")
+    void addPaymentWithSomePositiveAmount(){
+        // given
+        Payment payment1 = new Payment(7, PaymentType.Cash, 0.01);
+
+        // when
+        pizzaService.addPayment(payment1.getTableNumber(), payment1.getType(), payment1.getAmount());
+
+        // then
+        verify(paymentRepository).add(any());
+        verifyNoMoreInteractions(paymentRepository);
         assertFalse(payment1.getAmount() > 0);
     }
 }

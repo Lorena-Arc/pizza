@@ -44,7 +44,7 @@ public class PizzaService {
         if (l == null){
             return total;
         }
-        if(l.size() == 0) {
+        if(l.isEmpty()) {
             return total;
         }
         for (Payment p:l){

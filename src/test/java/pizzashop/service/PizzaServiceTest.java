@@ -196,7 +196,8 @@ class PizzaServiceTest {
 
     //lab03 tests
     @Test
-    @DisplayName("Test valid WBT")
+    @Order(10)
+    @DisplayName("Test valid WBT - total amount is 0")
     void getTotalAmount0() {
         //given
         Double totalCash, totalCard;
@@ -211,7 +212,8 @@ class PizzaServiceTest {
     }
 
     @Test
-    @DisplayName("Test invalid WBT")
+    @Order(11)
+    @DisplayName("Test valid WBT - total amount > 0")
     void getTotalAmountSuccessfully() {
         //given
         Double totalCash = 0.0d, totalCard = 0.0d;
@@ -239,8 +241,9 @@ class PizzaServiceTest {
     }
 
     @Test
-    @DisplayName("Test invalid WBT")
-    void getTotalAmount00() {
+    @Order(12)
+    @DisplayName("Test invalid WBT - payment type is null")
+    void paymentTypeIsNull() {
         //given
         Double totalCash, totalCard;
 
@@ -249,13 +252,14 @@ class PizzaServiceTest {
         totalCard = pizzaService.getTotalAmount(null);
         System.out.println(totalCard);
         //then
-        assertEquals(totalCash, 0.0);
-        assertEquals(totalCard, 0.0);
+        assertEquals(0.0, totalCash);
+        assertEquals(0.0, totalCard);
     }
 
     @Test
-    @DisplayName("Test valid WBT")
-    void getTotalAmountNull() {
+    @Order(13)
+    @DisplayName("Test invalid WBT - payments list is null")
+    void paymentsListIsNull() {
         //given
         Double totalCash, totalCard;
         List<Payment> payments = null;

@@ -45,7 +45,7 @@ class PizzaServiceTest {
     @Order(1)
     @DisplayName("Test for checking a payment - ECP")
     @Tag("payment")
-    void addPaymentSuccessfully() {
+    public void addPaymentSuccessfully() {
         // given
         Payment payment = new Payment(2, PaymentType.Cash, 19.3);
         System.out.println(payment.getTableNumber());
@@ -65,7 +65,7 @@ class PizzaServiceTest {
     @Test
     @Order(2)
     @DisplayName("Test for invalid table number - ECP")
-    void addPaymentWithInvalidTableNoECP() {
+    public void addPaymentWithInvalidTableNoECP() {
         // given
         Payment payment = new Payment(11, PaymentType.Cash, 230d);
         System.out.println(payment.getTableNumber());
@@ -81,7 +81,7 @@ class PizzaServiceTest {
     @Test
     @Order(3)
     @DisplayName("Test for invalid amount number - ECP")
-    void addPaymentWithInvalidAmountECP() {
+    public void addPaymentWithInvalidAmountECP() {
         // given
         Payment payment = new Payment(5, PaymentType.Cash, -60d);
         System.out.println(payment.getTableNumber());
@@ -99,7 +99,7 @@ class PizzaServiceTest {
     @Order(4)
     @ValueSource(ints = {1, 8})
     @DisplayName("Test for valid table number - BVA")
-    void tableNumberRange(int i) {
+    public void tableNumberRange(int i) {
         // given
         Payment payment = new Payment(i, PaymentType.Card, 0.01);
 
@@ -115,7 +115,7 @@ class PizzaServiceTest {
     @Test
     @Order(5)
     @DisplayName("Test for 0 table number - BVA")
-    void addPaymentWith0TableNo() {
+    public void addPaymentWith0TableNo() {
         // given
         Payment payment1 = new Payment(0, PaymentType.Cash, 19.3);
         System.out.println(payment1.getTableNumber());
@@ -131,7 +131,7 @@ class PizzaServiceTest {
     @Test
     @Order(6)
     @DisplayName("Test for 9 table number - BVA")
-    void addPaymentWith9TableNo() {
+    public void addPaymentWith9TableNo() {
         // given
         Payment payment = new Payment(9, PaymentType.Card, 0.01);
         System.out.println(payment.getTableNumber());
@@ -148,7 +148,7 @@ class PizzaServiceTest {
     @Order(7)
     @Timeout(1)
     @DisplayName("Test for zero amount - BVA")
-    void addPaymentWithZeroAmount() {
+    public void addPaymentWithZeroAmount() {
         // given
         Payment payment = new Payment(7, PaymentType.Cash, 0.0);
 
@@ -164,7 +164,7 @@ class PizzaServiceTest {
     @Order(8)
     @Timeout(1)
     @DisplayName("Test for negative amount - BVA")
-    void addPaymentWithInvalidAmount() {
+    public void addPaymentWithInvalidAmount() {
         // given
         Payment payment1 = new Payment(7, PaymentType.Cash, -0.1);
 
@@ -180,7 +180,7 @@ class PizzaServiceTest {
     @Order(9)
     @Timeout(1)
     @DisplayName("Test for positive amount - BVA")
-    void addPaymentWithSomePositiveAmount() {
+    public void addPaymentWithSomePositiveAmount() {
         // given
         Payment payment1 = new Payment(7, PaymentType.Cash, 0.01);
 

@@ -24,21 +24,21 @@ import static org.mockito.Mockito.*;
 class PizzaServiceTest {
 
     @Mock
-    private MenuRepository menuRepository;
+    public MenuRepository menuRepository;
 
     @Mock
-    private PaymentRepository paymentRepository;
+    public PaymentRepository paymentRepository;
 
     @InjectMocks
-    private PizzaService pizzaService;
+    public PizzaService pizzaService;
 
     @BeforeEach
-    void setUp() {
+    public void setUp() {
         pizzaService = new PizzaService(menuRepository, paymentRepository);
     }
 
     @AfterEach
-    void tearDown() {
+    public void tearDown() {
     }
 
     @Test

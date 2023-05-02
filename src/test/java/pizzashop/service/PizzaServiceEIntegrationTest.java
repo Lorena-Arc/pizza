@@ -20,22 +20,22 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @ExtendWith(MockitoExtension.class)
 public class PizzaServiceEIntegrationTest {
 
-    private MenuRepository menuRepo;
-    private PaymentRepository payRepo;
-    private PizzaService pizzaService;
+    public MenuRepository menuRepo;
+    public PaymentRepository payRepo;
+    public PizzaService pizzaService;
 
     @BeforeEach
-    void setUp() throws FileNotFoundException {
+    public void setUp() throws FileNotFoundException {
         this.setMenuRepo();
         this.setPayRepo();
         pizzaService = new PizzaService(menuRepo, payRepo);
     }
 
-    private void setMenuRepo() {
+    public void setMenuRepo() {
         menuRepo = new MenuRepository("data/test-menu.txt", null);
     }
 
-    private void setPayRepo() throws FileNotFoundException {
+    public void setPayRepo() throws FileNotFoundException {
         File file = new File("data/test-payments.txt");
         PrintWriter writer = new PrintWriter(file);
         writer.print("");
@@ -45,7 +45,7 @@ public class PizzaServiceEIntegrationTest {
     }
 
     @Test
-    void testAddPayment() {
+    public void testAddPayment() {
         // when
         this.pizzaService.addPayment(1, PaymentType.Cash, 20.0);
         this.pizzaService.addPayment(2, PaymentType.Card, 30.0);
@@ -57,7 +57,7 @@ public class PizzaServiceEIntegrationTest {
     }
 
     @Test
-    void testGetMenuData() {
+    public void testGetMenuData() {
         // when
         List<MenuDataModel> menuData = pizzaService.getMenuData();
 

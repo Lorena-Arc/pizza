@@ -27,13 +27,13 @@ public class PizzaServiceRIntegrationTest {
     private final List<MenuDataModel> menuItems = new ArrayList<>();
 
     @BeforeEach
-    void setUp() {
+    public void setUp() {
         this.setMenuRepo();
         this.setPayRepo();
         pizzaService = new PizzaService(menuRepo, payRepo);
     }
 
-    private void setMenuRepo() {
+    public void setMenuRepo() {
         MenuDataModel menuItem1 = mock(MenuDataModel.class);
         MenuDataModel menuItem2 = mock(MenuDataModel.class);
         menuItems.add(menuItem1);
@@ -41,7 +41,7 @@ public class PizzaServiceRIntegrationTest {
         menuRepo = new MenuRepository("data/test-menu.txt", menuItems);
     }
 
-    private void setPayRepo() {
+    public void setPayRepo() {
         Payment payment1 = mock(Payment.class);
         Payment payment2 = mock(Payment.class);
         payments.add(payment1);
@@ -50,7 +50,7 @@ public class PizzaServiceRIntegrationTest {
     }
 
     @Test
-    void testAddPayment() {
+    public void testAddPayment() {
         // given
         int tableNumber = 1;
         PaymentType paymentType = PaymentType.Cash;
@@ -65,7 +65,7 @@ public class PizzaServiceRIntegrationTest {
     }
 
     @Test
-    void testGetMenuData() {
+    public void testGetMenuData() {
         // given
         when(menuItems.get(0).getQuantity()).thenReturn(5);
         when(menuItems.get(1).getQuantity()).thenReturn(6);

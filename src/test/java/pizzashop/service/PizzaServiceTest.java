@@ -199,7 +199,7 @@ public class PizzaServiceTest {
     //lab03 tests
     @Test
     @DisplayName("Test BBT - valid payments")
-    void getTotalBBT() {
+    public void getTotalBBT() {
         //given
         Double totalCash = 0.0d, totalCard = 0.0d;
         List<Payment> payments = pizzaService.getPayments();
@@ -222,7 +222,7 @@ public class PizzaServiceTest {
 
     @Test
     @DisplayName("Test BBT - no payments")
-    void getTotalBBTNoPayments() {
+    public void getTotalBBTNoPayments() {
         //given
         Double totalCash = 0.0d, totalCard = 0.0d;
 
@@ -238,7 +238,7 @@ public class PizzaServiceTest {
     @Test
     @Order(10)
     @DisplayName("Test valid WBT - total amount is 0 F02_TC03")
-    void getTotalAmount0() {
+    public void getTotalAmount0() {
         //given
         Double totalCash, totalCard;
 
@@ -254,7 +254,7 @@ public class PizzaServiceTest {
     @Test
     @Order(11)
     @DisplayName("Test valid WBT - total amount > 0 F02_TC05 + F02_TC06")
-    void getTotalAmountSuccessfully() {
+    public void getTotalAmountSuccessfully() {
         //given
         Double totalCash = 0.0d, totalCard = 0.0d;
         Payment payment1 = new Payment(7, PaymentType.Cash, 12.3);
@@ -277,7 +277,7 @@ public class PizzaServiceTest {
     @Test
     @Order(12)
     @DisplayName("Test invalid WBT - payment type is null F02_TC01")
-    void paymentTypeIsNull() {
+    public void paymentTypeIsNull() {
         //given
         Double totalCash, totalCard;
 
@@ -293,7 +293,7 @@ public class PizzaServiceTest {
     @Test
     @Order(13)
     @DisplayName("Test invalid WBT - payments list is null F02_TC02")
-    void paymentsListIsNull() {
+    public void paymentsListIsNull() {
         //given
         Double totalCash, totalCard;
         List<Payment> payments = null;

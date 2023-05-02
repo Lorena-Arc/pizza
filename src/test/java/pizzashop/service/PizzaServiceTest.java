@@ -21,7 +21,7 @@ import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-class PizzaServiceTest {
+public class PizzaServiceTest {
 
     @Mock
     public MenuRepository menuRepository;

@@ -2,8 +2,6 @@ package pizzashop.service;
 
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.ValueSource;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -14,10 +12,9 @@ import pizzashop.repository.PaymentRepository;
 
 import java.util.List;
 
-import static org.mockito.ArgumentMatchers.any;
-
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
@@ -197,6 +194,44 @@ class PizzaServiceTest {
     // =================================================================================================================
     // =================================================================================================================
     //lab03 tests
+    @Test
+    @DisplayName("Test BBT - valid payments")
+    void getTotalBBT() {
+        //given
+        Double totalCash = 0.0d, totalCard = 0.0d;
+        List<Payment> payments = pizzaService.getPayments();
+        payments.add(new Payment(7, PaymentType.Cash, 12.3));
+        payments.add(new Payment(1, PaymentType.Cash, 0.));
+        payments.add(new Payment(2, PaymentType.Cash, 100.7));
+        payments.add(new Payment(5, PaymentType.Card, 12.3));
+        payments.add(new Payment(7, PaymentType.Card, 0.));
+        payments.add(new Payment(8, PaymentType.Card, 100.7));
+
+        //when
+        when(paymentRepository.getAll()).thenReturn(payments);
+        totalCash = pizzaService.getTotalAmount(PaymentType.Cash);
+        totalCard = pizzaService.getTotalAmount(PaymentType.Cash);
+
+        //then
+        assertEquals(113, totalCash);
+        assertEquals(113, totalCard);
+    }
+
+    @Test
+    @DisplayName("Test BBT - no payments")
+    void getTotalBBTNoPayments() {
+        //given
+        Double totalCash = 0.0d, totalCard = 0.0d;
+
+        //when
+        totalCash = pizzaService.getTotalAmount(PaymentType.Cash);
+        totalCard = pizzaService.getTotalAmount(PaymentType.Cash);
+
+        //then
+        assertEquals(0, totalCash);
+        assertEquals(0, totalCard);
+    }
+
     @Test
     @Order(10)
     @DisplayName("Test valid WBT - total amount is 0 F02_TC03")

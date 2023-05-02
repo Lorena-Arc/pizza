@@ -9,12 +9,21 @@ import java.util.List;
 import java.util.StringTokenizer;
 
 public class PaymentRepository {
-    private static String filename = "data/payments.txt";
+    private String filename = "data/payments.txt";
     private List<Payment> paymentList;
 
     public PaymentRepository(){
         this.paymentList = new ArrayList<>();
         readPayments();
+    }
+
+    public PaymentRepository(String filename, List<Payment> paymentList){
+        this.filename = filename;
+        this.paymentList = paymentList;
+        if (paymentList == null) {
+            this.paymentList = new ArrayList<>();
+            readPayments();
+        }
     }
 
     private void readPayments(){
